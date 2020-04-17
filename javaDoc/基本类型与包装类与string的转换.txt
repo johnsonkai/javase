@@ -1,0 +1,11 @@
+  java中所有的类都从java.lang.Object类派生而来，在java语言中，除基本数据类型以外，基本数据类型有java类库体统了包装类：Integer类保存整形变量，Boolean类保存布尔变量，Float类保存单精度变量，
+   基本数据类型与包装类、String类的互相转换
+基本数据类型→包装类，调用包装类构造 int a = 10; Integer b = new Integer(a);
+包装类→基本数据类型,调用包装类对象的**value()，Integer b = new Integer(10); int a = b.intValue()
+包装类→String，调用包装类的对象的toString(),Intger b = new Integer(10); String str = b.toString();
+String→包装类，调用包装类的构造方法,String str = "10"; Integer b = new Integer(str);
+String→基本数据类型，包装类.valueOf(), int b = Integer.valueOf(str);
+基本数据类型→String，调用包装类的toString();String str = Integer.toString(10);
+    String与char数组的转：
+String转换char数组，使用toString(),String str = "hello world"; char[] charArray = str.toString();
+char数组转换String， char[] charArray = {'h','e','l','l','o'....}; str = new String(charArray);

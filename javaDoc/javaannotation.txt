@@ -1,0 +1,307 @@
+
+1注解：1.（annotation）是对程序作出相应的解释（这跟注释一样的 注解 可以处理程序流程）注解所在的包为java.lang.annotation 常用的跟注解有关的java类型有：target中枚举elementtype，retention中retenttionpocliy。注解可以被其它注解注释。
+  2. 可以被其他程序读取（通过反射）。
+2Annotation格式： @注释名
+3 注解可以用在package ，class ，field ，method
+4内置注解有：Override suppresswarnnings deprecated。注解属性为value时注解（[value] = 属性值）
+5.内置注解练习：
+package cn.com.annation;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class AnnationDemo01 {
+	//内置注解@OVerride是重写父类的方法，如果没有重写父类的方法则会保错。
+	@Override
+	public String toString(){
+		return "";
+	}
+	@Deprecated
+	public static void test(){
+		System.out.println("test方法不建议使用");
+	}
+	//@Deprecated表示不建议使用的方法
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) {
+		Date d = new Date();
+		test();
+		
+		d.parse(null);
+	}
+	//@Suppresdwarnning参数值有deprecation,unchecked,path,finally,serial,all
+	@SuppressWarnings("all")
+	public void test2(){
+		ArrayList list = new ArrayList();
+	}
+	
+	
+}
+6.自定义注解练习：元注解常用的有retention ，target
+package cn.com.annation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+//注解作用的对象
+@Target(value = {ElementType.METHOD,ElementType.TYPE})
+//@retention表示在什么级别保存信息，级别有source class runtime
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MyAnnotation01 {
+	//通常用“”,0表示默认值
+	String stuName() default"";
+	int stuAge() default 0;
+	int id() default -1;//负数表示错误信息
+	String [] school() default {"北大","上大"};
+}
+package cn.com.annation;
+@MyAnnotation01
+public class AnnotationDemo02 {
+	//元注解是注解其他注解的注解，有@target @retention
+	//@target 描述注解使用的范围
+	@MyAnnotation01(stuName = "jack",stuAge = 14,id =3,school = {"武大","湖大"})
+	public void test (){
+		
+	}
+}
+7.自定义注解和反射的综合练习。根据javabean上相应的注解信息建立相应的数据表（数据库）
+package cn.com.annotation1;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(value = {ElementType.TYPE}) 
+@Retention(RetentionPolicy.RUNTIME)
+
+public @interface StuTable {
+	String value() default "";
+}
+
+package cn.com.annotation1;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(value={ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface StuField {
+	String columnName();
+	int length();
+	String type();
+}
+package cn.com.annotation1;
+
+
+@StuTable(value ="Student_tab")
+public class Student {
+	@StuField(columnName = "id",length = 11,type = "number")
+	private int id;
+	@StuField(columnName = "name",length = 22,type = "varchar2")
+	private String name;
+	@StuField(columnName = "age",length = 2, type = "number")
+	private int age;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+}
+package cn.com.annotation1;
+
+import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.Annotation;
+
+import cn.com.connectutil.JdbcUtil;
+//反射相关操作
+public class AnnotationDemo2 {
+
+	/**
+	 * 通过反射来处理注解信息流程
+	 * shengcun@param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Class c = Student.class;
+		//读取所有的类注解
+		java.lang.annotation.Annotation[] ann = c.getAnnotations();
+		for(java.lang.annotation.Annotation a: ann){
+			System.out.println(a);
+		}
+		//读取某个类注解信息
+		StuTable st = (StuTable) c.getAnnotation(StuTable.class);
+		System.out.println(st.value());
+		Connection conn = null;
+		PreparedStatement ps = null;
+		//通过反射读取属性注解信息
+		try {
+			Field f =c.getDeclaredField("name");
+			StuField std = f.getAnnotation(StuField.class);
+			System.out.println(std.columnName()+"----"+std.length()+"----"+std.type());
+			Field f1 =c.getDeclaredField("id");
+			StuField std1 = f1.getAnnotation(StuField.class);
+			System.out.println(std1.columnName()+"----"+std1.length()+"----"+std1.type());
+			Field f2 =c.getDeclaredField("age");
+			StuField std2 = f2.getAnnotation(StuField.class);
+			System.out.println(std2.columnName()+"----"+std2.length()+"----"+std2.type());
+			conn = JdbcUtil.getConn();
+			String sql = "create table "+st.value()+" ("+std.columnName()+" "+ std.type()+"("+std.length()+"),"+std1.columnName()+" "+std1.type()+"("+std1.length()+"),"+std2.columnName()+" "+std2.type()+"("+std2.length()+"))";
+			ps = conn.prepareStatement(sql);
+			int num = ps.executeUpdate();
+			System.out.println(num);
+			
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	finally{
+			if(ps!=null){
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+			if(conn!=null){
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+			
+		}
+		
+	}
+//	public static void createTable(){
+//		
+//		String sql = 
+//		
+//
+//	}
+
+}
+package cn.com.connectutil;
+
+import java.beans.Statement;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import oracle.jdbc.driver.OracleDriver;
+import oracle.jdbc.rowset.OracleCachedRowSet;
+
+import org.junit.Test;
+//数据库连接工具类
+public final class JdbcUtil {
+	private static String driverPath = "oracle.jdbc.driver.OracleDriver";
+	private static String url ="jdbc:oracle:thin:@127.0.0.1:1521:orcl" ;
+	private static String userName = "scott";
+	private static String password = "tiger";
+	private JdbcUtil(){
+		
+	}
+	static{
+		
+		try {
+			Properties ps = new Properties();
+			InputStream is = JdbcUtil.class.getResourceAsStream("/db.properties");
+			
+			ps.load(is);
+			driverPath = ps.getProperty("driverPath");
+			
+			userName = ps.getProperty("userName");
+			url = ps.getProperty("url");
+			password = ps.getProperty("password");
+			Class.forName(driverPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public static Connection getConn(){
+		Connection conn = null;
+		try {
+			 conn = DriverManager.getConnection(url, userName, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return conn;
+	}
+	public static void closeAll(ResultSet rs,Statement state,Connection conn){
+		if(rs!=null){
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(state!=null){
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(conn!=null){
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+junit4框架实现原理：首先类获得class对象。通过class对象调用getDeclaredMethods。获得一个method数组，遍历method数组获得每一个method，通过isAnnotationpresent方法，判断method是否被test注解。
+package cn.com.junit;
+JUNit3
+import junit.framework.TestCase;
+/**
+ * 没有反射，就没有大多数框架
+ * @author Administrator
+ *
+ */
+public class Junit3Test extends TestCase {
+	public void test(){
+		System.out.println("dd");
+	}
+}

@@ -1,0 +1,92 @@
+gi下载github上资源
+1.cd xxx 切换到要放资源的目录,作为本地仓库
+2. git init 本地仓库初始化。
+3. git clone url(https://github.com/用户名/仓库名)将你需要的项目从github或者服务器上克隆下来
+
+往github上传资源：
+1.cd xxx 切换到要放资源的目录,作为本地仓库
+2. git init 本地仓库初始化。
+3.echo xxx > README.md  创建初始化文件
+4. git add README.md  把文件从工作区加入到缓存区
+5. git commit -m "描述" 提交README.md 到本地仓库
+6. git remote add origin https://github.com/johnsonkai/root.git//增加一个远程仓库。
+7. git push -u origin master 上传
+
+删除命令（（带 git）删除缓存区的文件或文件夹，并且删除公共区相应的文件或文件夹，如果需要删除相应的版本库的文件或文件夹，则需要提交）
+ git rm -rf README.md
+ git commit -m "remove new gitignore directory"
+ git push origin master   
+ rm -rf dd.txt 直接删除工作区的文件或文件夹。
+
+ git常用命令：
+git init -> 生成本地库
+
+git remote add origin git@github.com:hsx1612727380/huaxin.git ->关联远程库
+
+git clone https://github.com/hsx1612727380/huaxin.git -> 从远程库clone库到本地，自动生成.git文件，就不需要git init 命令了
+Git中从远程的分支获取最新的版本到本地有这样2个命令：
+git pull  origin master-> 从远程库pull代码到本地库
+git fetch：相当于是从远程获取最新版本到本地，不会自动merge
+git fetch origin master:tmp
+git diff tmp 
+git merge tmp
+git pull origin master相当于是从远程获取最新版本并merge到本地
+git add . -> 当前的目前的文件到本地git的空间
+
+git commit -m "first commit" -> 添加代码
+
+git push origin master -> ? 这个本人基本不用，一般用git gui，图形界面不易出错
+
+git config -l -> 查看基本的信息，如user.name和user.email
+git config --global -e 查看修改系统配置
+git config --global user.name "name"
+git config --global user.email "email"
+ "xx"配置用户名和email
+git status -> 查看仓库的状态（是否更新，是否需要提交，查询暂存区的是否需要提交信息的东西）ar
+git diff filename or dir (比较版本库与暂存区的文件或文件夹的区别，因为冲突是在提交中产生的)
+git gui 这个图形界面工具非常好，可以把自己修改的文件自动显示出来。 
+1. 在git gui中Ctrl +T 相当于git add命令 
+2. 在git gui 中commit就是git commit命令 要增加自己的说明 
+3. 在git gui 中push 就是git push命令
+
+（将分支的内容质检到工作区）
+git checkout [-q] [<commit>] [--] <paths> ...(含有commit是将版本库的内容还原到工作区，没有是将暂存区的内容还原到工作区)
+常用格式：
+git checkout 版本id  工作区对应的分支回退相应版本号的版本
+git checkout 版本id  -- 文件名或文件夹  工作区相应的文件名或文件夹所对应的分支回退相应版本号的版本
+git checkout   -- 文件名或文件夹 (使用该操作时，最好保持暂存区跟版本库的内容一致，);
+git checkout [<branch>]  检出某个分支（不填，检出默认分支）（理解为分支的转换）（Head指针指向的分支变了）
+git checkout [<branch>]   -- 文件名或文件夹 （在工作区 检出某个分支的某个文件夹或文件）
+git checkout [-m] [ [-b | -- orphan ] <new_branch>]  [start_point] [c]
+git checkout [--]./java -> （将(默认是master分支)(缓存区)版本库的文件或文件夹还原到工作区（当不小心删除工作区的内容）,不会清空工作区新增的内容，所有要保证缓存区和版本库的一致性）
+git checkout  -b 分支名（创建分支，并检出分支（理解为分支创建和转换）相当于git branch 分支名 和git checkout 分支名,）
+git merge branch名（一般将分支合并到master分支）
+git merge --no-ff -m "merge with no-ff" dev（删除分支，会保留分支信息（--no-ff ））
+git branch  -d  删除分支
+git checkout 03f482d2（版本id） -- ./a > 还原到某个提交版本（如果没有版本号，将暂存区的文件或文件夹还原到工作区）
+git branch 分支名（会将当前分支的内容检出到指定分支中）
+ 
+git log  查看提交日志
+git log --graph --pretty=oneline --abbrev-commit 查看日志含有版本id，以及分支合并信息
+检查修改：
+1.检查暂存区的内容与公共区内容差异(已暂存)
+git diff 
+2.检查本地仓库与暂存区的差异（已提交）
+git diff -cached
+2.检查本地仓库与远程仓库的差异（已提交）
+git diff -cached master origin/master
+
+
+2.
+撤销更改
+1.将暂存区的内容恢复 add操作后
+git reset --hard  git checkout 
+2.将仓库中的内容恢复 commit操作后
+git reset --hard origin/master
+3.将远程中的内容恢复 push后
+git reset --hard HEAD^ 
+push -f 还原远程仓库的内容
+git reset --hard HEAD^ 还原到上传版本
+git reset --hard 版本号 -> ？ 还原到指定版本。
+
+
