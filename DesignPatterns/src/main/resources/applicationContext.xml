@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/tool"
+	   xmlns:contex="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool.xsd">
+		<bean id="plane" class="cn.ck.proxy.xmlaop.Plane"></bean>
+		<bean id="aspectAop" class="cn.ck.proxy.annoaop.AspectAop"></bean>
+<!--
+		<bean id="aspectAop" class="cn.ck.proxy.xmlaop.AspectAop"></bean>
+-->
+		<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+		<!--<aop:config>
+			<aop:pointcut id="planeCut" expression="execution(* cn.ck.proxy.xmlaop.Plane.move())" />
+			<aop:aspect ref="aspectAop"  >
+				<aop:before method="begin" pointcut-ref="planeCut"></aop:before>
+				<aop:after method="end" pointcut-ref="planeCut" ></aop:after>
+			</aop:aspect>
+
+		</aop:config>-->
+</beans>
+         
