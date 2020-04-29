@@ -4,7 +4,8 @@ import cn.ck.proxy.xmlaop.Movable;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * ×¢½âaop²âÊÔÀà
+ * æ³¨è§£aop
+ * ×¢ï¿½ï¿½aopï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 public class AnnoAopTest {
     public static void main(String[] args) throws InterruptedException {
