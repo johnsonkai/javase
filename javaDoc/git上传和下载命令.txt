@@ -55,7 +55,7 @@ git checkout [-q] [<commit>] [--] <paths> ...(含有commit是将版本库的内容还原到工
 git checkout 版本id  工作区对应的分支回退相应版本号的版本
 git checkout 版本id  -- 文件名或文件夹  工作区相应的文件名或文件夹所对应的分支回退相应版本号的版本
 git checkout   -- 文件名或文件夹 (使用该操作时，最好保持暂存区跟版本库的内容一致，);
-git checkout [<branch>]  检出某个分支（不填，检出默认分支）（理解为分支的转换）（Head指针指向的分支变了）
+git checkout g检出某个分支（不填，检出默认分支）（理解为分支的转换）（Head指针指向的分支变了）
 git checkout [<branch>]   -- 文件名或文件夹 （在工作区 检出某个分支的某个文件夹或文件）
 git checkout [-m] [ [-b | -- orphan ] <new_branch>]  [start_point] [c]
 git checkout [--]./java -> （将(默认是master分支)(缓存区)版本库的文件或文件夹还原到工作区（当不小心删除工作区的内容）,不会清空工作区新增的内容，所有要保证缓存区和版本库的一致性）
@@ -68,14 +68,17 @@ git branch 分支名（会将当前分支的内容检出到指定分支中）
  
 git log  查看提交日志
 git log --graph --pretty=oneline --abbrev-commit 查看日志含有版本id，以及分支合并信息
-检查修改：
-1.检查暂存区的内容与公共区内容差异(已暂存)
-git diff 
-2.检查本地仓库与暂存区的差异（已提交）
-git diff -cached
-2.检查本地仓库与远程仓库的差异（已提交）
-git diff -cached master origin/master
 
+检查修改：
+
+2.检查本地仓库与远程仓库的差异（已提交）
+git diff --cached master origin/master
+1.git diff[filename] 比较的是暂存区与工作区的差异（如果不指定filename比较的是所有的文件，指定filename比较的是单一文件，内容）
+2.git diff --cached [filename] 比较的是本地仓库与暂存区的差异
+3.git diff HEAD [filename] 比较的是本地仓库与工作区的差异
+4.git diff 版本1 版本2 比较的二个commit的版本的差异如 git diff HEAD HEAD^比较的是上一个版本与当前版本的差异
+5.git diff 分支1 分支2 比较二个分支已commit部分的差异，如：git diff master tmp
+6.git diff 分支1 比较分支1与当前工作区的差别
 
 2.
 撤销更改
@@ -86,7 +89,7 @@ git reset --hard origin/master
 3.将远程中的内容恢复 push后
 git reset --hard HEAD^ 
 push -f 还原远程仓库的内容
-git reset --hard HEAD^ 还原到上传版本
+git reset --hard HEAD^ 工作区还原到上一个版本
 git reset --hard 版本号 -> ？ 还原到指定版本。
 
 
