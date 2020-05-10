@@ -1,26 +1,20 @@
 package cn.ck.proxy.staticproxy;
 
 
-
-
-
 /**
- * ��̬���������?
- * ��̬������̳з�����?
- * ������ǿ�����?���������Խ���Ƕ�״��?��̳�ֻҪ�Ա�����ķ�������ĳ�����������ǿ�͵ü̳б��������
- * ��̬�����ȱ��?����һ����������󱻶��������?��ô��Ҫ�������������?
- * 2:�ӿ�����һ�����������������?��Ҫ����һ��������Υ���˿���ԭ��
- * @author Administrator
- *
+ *静态代理测试类
  */
 public class TestProxy {
 	public static void main(String[] args) throws InterruptedException {
-		//�������?�磺��¼�ɻ���е����?
-		Plane p=new Plane();
-		PlaneProxyLog ppl=new PlaneProxyLog(p);
-		//ppl.move()
-	
-		PlaneTimeProxy ptp=new PlaneTimeProxy(ppl);
+		Movable p=new Plane();
+		//日志代理类
+		PlaneLogProxy plp=new PlaneLogProxy(p);
+		plp.move();
+		//时间代理类型
+		PlaneTimeProxy simplePtp =new PlaneTimeProxy(p);
+		simplePtp.move();
+		//时间代理类嵌套日志代理类
+		PlaneTimeProxy ptp=new PlaneTimeProxy(plp);
 		ptp.move();
 	}
 }
