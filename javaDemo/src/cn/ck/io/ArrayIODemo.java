@@ -25,6 +25,7 @@ import com.sun.xml.internal.messaging.saaj.util.CharWriter;
  *
  */
 public class ArrayIODemo {
+	
 	public static void main(String[] args) throws IOException {
 		File f=new File("src/cn/ck/io/test.txt");
 		File dest=new File("src/cn/ck/io/test2.txt");
