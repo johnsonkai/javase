@@ -10,7 +10,7 @@ import java.util.Random;
  * @author Administrator
  *
  */
-public class Plane {
+public class Plane implements Movable{
 
 	public void move() throws InterruptedException {
 		System.out.println("plane luanching...");

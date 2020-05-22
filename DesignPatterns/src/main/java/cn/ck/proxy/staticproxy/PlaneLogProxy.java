@@ -2,13 +2,13 @@ package cn.ck.proxy.staticproxy;
 
 
 /**
- * 飞机飞行过程记录的飞机代理类
+ * 飞机飞行过程记录代理类（日志）
  * @author Administrator
  *
  */
-public class PlaneProxyLog implements Movable {
+public class PlaneLogProxy implements Movable {
 	Movable mover;
-	public PlaneProxyLog(Movable mover){
+	public PlaneLogProxy(Movable mover){
 		this.mover=mover;
 	}
 	public void move() throws InterruptedException {
