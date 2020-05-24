@@ -17,7 +17,7 @@ public abstract  class OfficialAccount {
     public abstract void removeUser(User user);
     /*通知观察者user*/
     public abstract  void notifyUser(MessageEvent event);
-    /*发送消息方法*/
+    /*发送消息的方法*/
     public abstract void sendMessage() ;
 
     public OfficialAccount(String officialName) {
