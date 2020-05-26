@@ -1,4 +1,4 @@
-package cn.ck.observer.v1;
+package cn.ck.observer.v3;
 
 /**
  * 用户类，抽象观察者(事件源对象)。

@@ -1,4 +1,4 @@
-package cn.ck.observer.v1;
+package cn.ck.observer.v3;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 具体事件源对象 被观察对象 新闻类公众号
+ *  具体事件对象，被观察对象 ，游戏公众号
  */
-public class NewsOfficialAccount extends OfficialAccount {
-
+public class GameOfficialAccount extends OfficialAccount {
+    public GameOfficialAccount(String officialName) {
+        super(officialName);
+    }
     //创建一个list存放所有观察者user
     private List<User> users=new ArrayList<User>();
     //添加一个观察者user
@@ -32,17 +34,8 @@ public class NewsOfficialAccount extends OfficialAccount {
     public void sendMessage() {
         System.out.println(actionCommand);
         MessageEvent event=new MessageEvent(new Date(System.currentTimeMillis()),this);
-        System.out.println(officialName+"在"+ new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(event.getWhen())+"时，发出消息："+mesessage);
+        System.out.println(officialName+"在"+ new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(event.getWhen())+"时，发出消息："+mesessage);
         notifyUser(event);
 
     }
-
-    public NewsOfficialAccount(String officialName) {
-        super(officialName);
-    }
-
-
-
-
-
 }

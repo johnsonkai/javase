@@ -1,7 +1,4 @@
-package cn.ck.observer.v1;
-
-import java.util.ArrayList;
-import java.util.List;
+package cn.ck.observer.v3;
 
 /**
  * 模式微信公众号，抽象的被观察者对象，事件源对象

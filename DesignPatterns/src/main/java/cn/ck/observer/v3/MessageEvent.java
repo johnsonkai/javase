@@ -1,4 +1,4 @@
-package cn.ck.observer.v1;
+package cn.ck.observer.v3;
 
 /**
  * 事件类，用来记录公众号发出的消息相关信息

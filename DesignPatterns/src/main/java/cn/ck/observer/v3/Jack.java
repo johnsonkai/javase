@@ -1,4 +1,4 @@
-package cn.ck.observer.v1;
+package cn.ck.observer.v3;
 
 /**
  * 具体用户类，具体观察者
