@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /**
  * 简单模拟一下ArrayList,简单写一个get add 方法 具体聚集类
- * @param <E>
+ * @param <E>泛型E
  */
 public class MyArrayList<E> implements MyCollection<E> {
     int size;

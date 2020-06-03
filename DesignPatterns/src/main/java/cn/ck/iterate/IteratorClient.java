@@ -14,7 +14,7 @@ public class IteratorClient {
         }
         //获取迭代器
         Iterator<String> iterator =myArrayList.iterate();
-        //迭代器变量MyArrayList集合
+        //迭代器集合MyArrayList集合元素
         while(iterator.hasNext()){
             String name=iterator.next();
             System.out.println(name);
@@ -28,7 +28,7 @@ public class IteratorClient {
         }
         //LinkedList获取迭代器
         Iterator<String> iterator1 =myLinkedList.iterate();
-        //迭代器变量MyArrayList集合
+        //迭代器遍历MyLinkedList集合元素
         while(iterator1.hasNext()){
             String name=iterator1.next();
             System.out.println(name);

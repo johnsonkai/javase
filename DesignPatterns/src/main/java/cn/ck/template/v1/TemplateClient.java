@@ -1,4 +1,8 @@
-package cn.ck.template;
+package cn.ck.template.v1;
+
+import cn.ck.template.v1.AbstractTemplate;
+import cn.ck.template.v1.ConcreteTemplate;
+import cn.ck.template.v1.ConcreteTemplate1;
 
 /**
  * 模式方法客户端类
@@ -10,11 +14,11 @@ package cn.ck.template;
  */
 public class TemplateClient {
     public static void main(String[] args) {
-        //创建具体模板类，抽象类具体方法不重写
+        //创建具体模板类，抽象类具体方法重写
         AbstractTemplate template=new ConcreteTemplate();
         //调用模板方法也叫钩子函数
         template.templateMethod();
-        //创建具体模板类，抽象类具体方法重写
+        //创建具体模板类，抽象类具体方法不重写
         AbstractTemplate template1=new ConcreteTemplate1();
         //调用模板方法也叫钩子函数
         template1.templateMethod();

@@ -1,5 +1,7 @@
 package cn.ck.observer.v2;
 
+import java.util.EventObject;
+
 /**
  * 汇率变化观察者模式实现客户端类
  */
@@ -18,5 +20,6 @@ public class RateClient {
         rmbRate.change(2);
         //汇率降低
         rmbRate.change(-3);
+
     }
 }

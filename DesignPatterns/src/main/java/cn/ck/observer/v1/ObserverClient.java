@@ -1,5 +1,8 @@
 package cn.ck.observer.v1;
 
+/**
+ * ¿Í»§¶Ë²âÊÔÀà
+ */
 public class ObserverClient {
     public static void main(String[] args) {
 
